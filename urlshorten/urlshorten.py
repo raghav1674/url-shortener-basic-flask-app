@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request,flash
 from .utils.file_handler import check_code, get_url
 
 
@@ -22,9 +22,13 @@ def create_url():
         url = request.form['url']
         created, new_url = check_code(code, url, "urls.json")
         if created:
-            return new_url
-        return "Code already present"
-    return "Method not Supported"
+            flash("New Short Url Generated Successfully.",category='success')
+            return render_template('generated_url.html',url=new_url)
+        else:
+            flash("Please Choose different Short Name",category='danger')
+            return redirect(url_for('main.index'))
+    flash("Method Not Supported",category='danger')
+    return redirect(url_for('main.index'))
 
 # get the real url corresponding to the code given
 
@@ -34,7 +38,7 @@ def get_link(code):
     found, real_url = get_url(code, "urls.json")
     if found:
         return redirect(real_url)
-    return real_url
+    return redirect(url_for('main.index'))
 
 
 # @bp.route("/logout")

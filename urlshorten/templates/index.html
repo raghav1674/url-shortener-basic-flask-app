@@ -1,30 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL SHORTENER APP</title>
-    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
-</head>
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+{% endblock %}
+{% block title %} URL Shortener{% endblock %}
+{% block body %}
+<section class="form-container">
+    <form method="POST" action="/create_url">
+        <div class="form-header">URL SHORTENER</div>
+        <div class="input-container">
+            <label for="url">Url</label>
+            <input class='form-input' type="url" name="url" required>
+        </div>
+        <div class="input-container">
+            <label for="code">Short Name</label>
+            <input class='form-input' type="text" name="code" required>
+        </div>
+        <button class="form-footer" type="submit">Shorten</button>
 
-<body>
-    <section class="form-container">
-        <form method="POST" action="/create_url">
-            <div class="form-header">URL SHORTENER</div>
-            <div class="input-container">
-                <label for="url">Url</label>
-                <input class='form-input' type="url" name="url" required>
-            </div>
-            <div class="input-container">
-                <label for="code">Short Name</label>
-                <input class='form-input' type="text" name="code" required>
-            </div>
-            <button class="form-footer" type="submit">Shorten</button>
-
-        </form>
-    </section>
-</body>
-
-</html>
+    </form>
+</section>
+{% endblock %}
